@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chuẩn thiết kế HDSD · End-user & Người thiết lập</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f2ee;--surf:#e9e8e2;--ink:#14140f;--mute:#6b6a62;--line:#cfcdc3;--acc:#2447f0;--acc-ink:#fff;
+--sans:"Space Grotesk","Segoe UI",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101110;--surf:#191a18;--ink:#ecebe4;--mute:#8d8c83;--line:#2e2f2b;--acc:#8ea2ff;--acc-ink:#0b0d1a}}
+:root[data-theme="dark"]{--bg:#101110;--surf:#191a18;--ink:#ecebe4;--mute:#8d8c83;--line:#2e2f2b;--acc:#8ea2ff;--acc-ink:#0b0d1a}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 16px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans)}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.02em}
+.mute{color:var(--mute)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.nav{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+.nav nav{display:flex;gap:22px;overflow-x:auto;white-space:nowrap}
+.nav nav a:hover{color:var(--acc)}
+.dot{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--acc)}
+section{padding:88px 0;border-bottom:1px solid var(--line)}
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:40px;gap:16px}
+.sec h2{font:500 clamp(28px,4vw,40px)/1.1 var(--mono);margin:6px 0 0;letter-spacing:-.02em}
+h1{font:500 clamp(40px,7.4vw,92px)/1.02 var(--sans);letter-spacing:-.035em;margin:20px 0 28px;max-width:14ch}
+.lead{max-width:60ch;font-size:18px;color:var(--mute)}
+.cta{display:inline-block;margin-top:28px;padding:14px 22px;background:var(--acc);color:var(--acc-ink);font-family:var(--mono);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:72px;border-top:1px solid var(--line)}
+.stats div{padding:20px 20px 0 0}
+.stats b{display:block;font:500 clamp(36px,5vw,60px)/1 var(--sans);letter-spacing:-.03em}
+.pick{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:1.1fr 1.6fr .9fr 40px;gap:24px;padding:26px 0;border-bottom:1px solid var(--line);align-items:start;transition:background .15s}
+.row:hover{background:var(--surf)}
+.row h3{margin:0;font:500 22px/1.25 var(--sans)}
+.row p{margin:4px 0 0;color:var(--mute)}
+[hidden]{display:none!important}.row.on{background:var(--surf);box-shadow:inset 3px 0 0 var(--acc)}.cols{display:grid;gap:0;border:1px solid var(--line)}
+.c3{grid-template-columns:repeat(3,1fr)}.c2{grid-template-columns:repeat(2,1fr)}
+.card{padding:28px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 -1px -1px 0;min-height:230px}
+.card h3{font:500 22px/1.25 var(--sans);margin:10px 0 14px}
+.card ul{list-style:none;margin:0;padding:0}
+.card li{padding:4px 0 4px 18px;position:relative}
+.card li::before{content:"›";position:absolute;left:0;color:var(--acc);font-family:var(--mono)}
+.goal{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:22px 0;border-top:1px solid var(--line);margin-bottom:36px}
+.goal p{margin:0;font-size:20px;line-height:1.45;max-width:56ch}
+.phase{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);margin:40px 0}
+.phase>div{padding:28px}
+.phase>div+div{border-left:1px solid var(--line);background:var(--surf)}
+.phase h3{margin:8px 0 10px;font:500 24px var(--sans)}
+.bar{height:6px;background:var(--line);margin-top:18px;position:relative}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--acc)}
+.feat{border:1px dashed var(--line);padding:24px 28px;display:flex;justify-content:space-between;gap:24px;align-items:center;flex-wrap:wrap}
+.feat p{margin:6px 0 0;max-width:60ch}
+.mock{border:1px solid var(--line);background:var(--surf);margin-top:8px}
+.mock .bar2{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.mock .bar2 i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.mock .body{padding:16px;display:grid;gap:8px}
+.mock .body span{display:block;height:10px;background:var(--line)}
+.mock .body em{font:normal 12px var(--mono);color:var(--acc)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:16px 16px 16px 0;border-top:1px solid var(--line);vertical-align:top}
+th{font:500 12px var(--mono);color:var(--mute)}
+td:first-child{font-family:var(--mono);font-size:12px;color:var(--mute);width:20%}
+.scroll{overflow-x:auto}
+footer{padding:56px 0 64px}
+footer h2{font:500 clamp(30px,5vw,56px)/1.05 var(--sans);letter-spacing:-.03em;margin:12px 0 0;max-width:18ch}
+@media(max-width:820px){
+.stats{grid-template-columns:repeat(2,1fr)}.c3,.c2,.phase{grid-template-columns:1fr}
+.row{grid-template-columns:1fr;gap:6px}.goal{grid-template-columns:1fr;gap:8px}
+.phase>div+div{border-left:0;border-top:1px solid var(--line)}section{padding:60px 0}.dot{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.row{transition:none}}
+</style>
+</head>
+<body>
+
+<main id="top">
+<section><div class="wrap">
+<span class="mono mute">§ 00 — ĐẶC TẢ HDSD</span>
+<h1>Một hệ thống, hai cuốn hướng dẫn</h1>
+<p class="lead">Hướng dẫn sử dụng (HDSD) được chia theo người đọc: end-user và người thiết lập. Mỗi loại có mục đích riêng nên cấu trúc cũng khác nhau.</p>
+<a class="cta" href="#start">→ CHỌN LOẠI HDSD</a>
+<div class="stats">
+<div><b>2</b><span class="mono mute">loại HDSD theo người đọc</span></div>
+<div><b>3</b><span class="mono mute">cấu phần HDSD end-user</span></div>
+<div><b>6</b><span class="mono mute">cấu phần HDSD người thiết lập</span></div>
+<div><b>2</b><span class="mono mute">giai đoạn: Initial, Mature</span></div>
+</div></div></section>
+
+<section id="start"><div class="wrap">
+<div class="sec"><div><span class="mono mute">§ 01 — BẮT ĐẦU</span><h2>/start</h2></div></div>
+<div class="mono mute" style="display:grid;grid-template-columns:1.1fr 1.6fr .9fr 40px;gap:24px;padding-bottom:12px"><span>01 · BẠN LÀ</span><span>02 · ĐỌC</span><span>03 · KẾT QUẢ</span><span></span></div>
+<div class="pick">
+<a class="row on" href="#end-user" data-pick="end-user" aria-pressed="true"><div><h3>Người dùng cuối</h3></div><div><p>HDSD end-user — Quick guideline</p></div><div class="mono">Làm được ngay thao tác trọng yếu</div><span>→</span></a>
+<a class="row" href="#setup" data-pick="setup" aria-pressed="false"><div><h3>Người thiết lập hệ thống</h3></div><div><p>HDSD cho người thiết lập — Playbook cơ bản</p></div><div class="mono">Đạt first-value</div><span>→</span></a>
+</div></div></section>
+
+<section id="end-user"><div class="wrap">
+<div class="sec"><div><span class="mono mute">§ 02 — HDSD END-USER</span><h2>/end-user</h2></div><span class="mono dot">QUICK GUIDELINE</span></div>
+<div class="goal"><span class="mono mute">MỤC ĐÍCH</span><p>Bất kỳ ai đọc cũng làm được ngay các thao tác trọng yếu.</p></div>
+<div class="cols c3">
+<div class="card"><span class="mono mute">CẤU PHẦN.01</span><h3>Vai trò của ứng dụng</h3><ul><li>Ứng dụng giúp gì cho công việc của người đọc</li><li>Gắn với phòng ban và vị trí cụ thể</li></ul></div>
+<div class="card"><span class="mono mute">CẤU PHẦN.02</span><h3>Hướng dẫn thao tác</h3><ul><li>Các thao tác trọng yếu, từng bước</li><li>Có biểu đồ hoặc cap màn hình hệ thống</li><li>Có ví dụ theo phòng ban và vị trí</li></ul></div>
+<div class="card"><span class="mono mute">CẤU PHẦN.03</span><h3>Xử lý khi gặp lỗi</h3><ul><li>FAQ các lỗi thường gặp</li><li>Thông tin người hỗ trợ</li></ul></div>
+</div></div></section>
+
+<section id="setup"><div class="wrap">
+<div class="sec"><div><span class="mono mute">§ 03 — HDSD NGƯỜI THIẾT LẬP</span><h2>/setup</h2></div><span class="mono dot">PLAYBOOK</span></div>
+<div class="goal"><span class="mono mute">MỤC ĐÍCH</span><p>Playbook cơ bản cho người mới: làm theo là dùng được, là có first-value.</p></div>
+<div class="cols c3">
+<div class="card"><span class="mono mute">CẤU PHẦN.01</span><h3>Định vị vai trò của hệ thống</h3><ul><li>Hệ thống đóng vai trò gì trong tổ chức</li></ul></div>
+<div class="card"><span class="mono mute">CẤU PHẦN.02</span><h3>Gợi ý sử dụng theo 2 giai đoạn</h3><ul><li>Initial</li><li>Mature</li></ul></div>
+<div class="card"><span class="mono mute">CẤU PHẦN.03</span><h3>Khái niệm trên hệ thống</h3><ul><li>Các thuật ngữ và đối tượng cốt lõi</li></ul></div>
+<div class="card"><span class="mono mute">CẤU PHẦN.04</span><h3>Quy tắc phân quyền</h3><ul><li>Ai được làm gì trên hệ thống</li></ul></div>
+<div class="card"><span class="mono mute">CẤU PHẦN.05</span><h3>Thao tác thiết lập cơ bản</h3><ul><li>Cho giai đoạn Initial</li><li>Các tính năng chủ đạo</li></ul></div>
+<div class="card"><span class="mono mute">CẤU PHẦN.06</span><h3>Danh sách tất cả tính năng</h3><ul><li>Kèm link help hướng dẫn từng tính năng</li></ul></div>
+</div>
+
+<div class="phase">
+<div><span class="mono mute">GIAI ĐOẠN.01</span><h3>Initial</h3><p>Làm theo thao tác thiết lập cơ bản và các tính năng chủ đạo để có first-value.</p><div class="bar"><i style="width:35%"></i></div></div>
+<div><span class="mono mute">GIAI ĐOẠN.02</span><h3>Mature</h3><p>Mở rộng sang các tính năng còn lại khi hệ thống đã vận hành ổn định.</p><div class="bar"><i style="width:100%"></i></div></div>
+</div>
+
+<div class="feat"><div><span class="mono mute">THAM CHIẾU</span><p>Mọi tính năng đi kèm link help riêng, để người thiết lập đọc sâu đúng chỗ cần.</p></div><span class="mono dot">TẤT CẢ TÍNH NĂNG → LINK HELP</span></div>
+</div></section>
+
+<section id="nguyen-tac"><div class="wrap">
+<div class="sec"><div><span class="mono mute">§ 04 — NGUYÊN TẮC THIẾT KẾ CHUNG</span><h2>/principles</h2></div></div>
+<div class="cols c2">
+<div class="card"><span class="mono mute">NGUYÊN TẮC.01</span><h3>Có hình, không chỉ có chữ</h3><p>Nội dung hướng dẫn cần có biểu đồ hoặc cap màn hình hệ thống để thông tin dễ truyền tải.</p>
+<div class="mock"><div class="bar2"><i></i><i></i><i></i></div><div class="body"><em>cap màn hình / biểu đồ</em><span style="width:80%"></span><span style="width:55%"></span><span style="width:68%"></span></div></div></div>
+<div class="card"><span class="mono mute">NGUYÊN TẮC.02</span><h3>Ví dụ cụ thể, customize theo ngữ cảnh</h3><p>Mỗi hướng dẫn có ví dụ riêng cho phòng ban và vị trí của người đọc.</p>
+<ul style="margin-top:14px"><li>Phòng ban</li><li>Vị trí</li></ul></div>
+</div></div></section>
+
+</main>
+<script>
+(function(){var ids=["end-user","setup"],rows=document.querySelectorAll("[data-pick]");
+function show(id,go){ids.forEach(function(i){document.getElementById(i).hidden=i!==id});
+rows.forEach(function(r){var on=r.dataset.pick===id;r.classList.toggle("on",on);r.setAttribute("aria-pressed",on)});
+if(go)document.getElementById(id).scrollIntoView()}
+rows.forEach(function(r){r.addEventListener("click",function(){show(r.dataset.pick,false)})});
+function fromHash(){var h=location.hash.slice(1);if(ids.indexOf(h)>-1)show(h,true)}
+window.addEventListener("hashchange",fromHash);
+show("end-user",false);fromHash();})();
+</script>
+</body>
+</html>
